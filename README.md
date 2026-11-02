@@ -2,6 +2,9 @@
 
 [![tests](https://github.com/CCHHHHD/pixelpeeper/actions/workflows/tests.yml/badge.svg)](https://github.com/CCHHHHD/pixelpeeper/actions/workflows/tests.yml)
 [![GitHub](https://img.shields.io/badge/GitHub-CCHHHHD%2Fpixelpeeper-181717?logo=github)](https://github.com/CCHHHHD/pixelpeeper)
+[![release](https://img.shields.io/github/v/release/CCHHHHD/pixelpeeper)](https://github.com/CCHHHHD/pixelpeeper/releases/latest)
+
+**下载**：[Windows 打包版](https://github.com/CCHHHHD/pixelpeeper/releases/latest) · [源码](https://github.com/CCHHHHD/pixelpeeper)
 
 把游戏截图拖进窗口，从像素层面推断游戏真正运行在多少分辨率。
 
