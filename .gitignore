@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+reports/
+.pytest_cache/
+.venv/
+
+# local / personal test assets
+/test.png
+/docs/screenshot.png
+/pixelpeeper-win.zip
+*.bundle
+
+# scratch files at repository root
+/_*

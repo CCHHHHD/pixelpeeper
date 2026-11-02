@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pixelpeeper"
+version = "1.5.0"
+description = "Infer a game's internal render resolution from a screenshot"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "numpy>=1.24",
+    "pillow>=10.0",
+]
+
+[project.scripts]
+pixelpeeper = "pixelpeeper.cli:main"
+
+[project.gui-scripts]
+pixelpeeper-gui = "pixelpeeper.gui:main"
+
+[tool.setuptools.packages.find]
+include = ["pixelpeeper*"]
