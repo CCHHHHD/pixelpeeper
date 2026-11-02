@@ -1,5 +1,8 @@
 # 数毛器 · PixelPeeper
 
+[![tests](https://github.com/CCHHHHD/pixelpeeper/actions/workflows/tests.yml/badge.svg)](https://github.com/CCHHHHD/pixelpeeper/actions/workflows/tests.yml)
+[![GitHub](https://img.shields.io/badge/GitHub-CCHHHHD%2Fpixelpeeper-181717?logo=github)](https://github.com/CCHHHHD/pixelpeeper)
+
 把游戏截图拖进窗口，从像素层面推断游戏真正运行在多少分辨率。
 
 截图是按**屏幕分辨率**保存的，而游戏常常以更低的分辨率渲染，再放大到屏幕上。放大后的画面会留下可测量的网格：整列重复的像素、斜边上 1–2 px 的台阶、周期性的插值折点。这个工具就是把这些“毛”数出来。
