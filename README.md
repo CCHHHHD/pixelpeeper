@@ -72,6 +72,27 @@ python -m pixelpeeper
 
 为了保证测试有效，截图请用**系统自带截图**保存为 PNG，不要经过性能工具、聊天软件或图片编辑器的二次缩放/压缩；HiSmartPerf 之类的性能采集工具抓的图可能被工具自己缩放过，不能当作分辨率基准。
 
+## C/C++ 原生库（Android / HarmonyOS）
+
+`native/` 下提供了一份不依赖 NumPy/Pillow 的 C++17 实现，导出稳定 C ABI，可直接编成
+`libpixelpeeper.so`。同一套检测逻辑已在 10 个场景上与 Python 版逐项对比通过，1520×940
+样图约 0.64 s。
+
+```bash
+cmake -S native -B native/build -DCMAKE_BUILD_TYPE=Release
+cmake --build native/build -j
+ctest --test-dir native/build --output-on-failure
+```
+
+- 公开头文件：`native/include/pixelpeeper.h`
+- Android：JNI + Kotlin 封装在 `native/platform/android/`
+- HarmonyOS：Node-API 封装在 `native/platform/harmony/`
+- 详细的 Gradle/DevEco 配置、RGBA/RGB 输入选择、为什么 AI 直译会出错：
+  [`native/README.md`](native/README.md)
+
+核心只接收解码后的像素，不内置图片解码器；Android 用 `Bitmap`，鸿蒙用 `PixelMap`，
+再把 RGB/RGBA 缓冲区传给 `pp_analyze_rgb` / `pp_analyze_rgba` 即可。
+
 ## 命令行
 
 ```powershell
@@ -155,7 +176,8 @@ pixelpeeper/
 │  ├─ dnd.py          # Windows 原生拖放（ctypes / WM_DROPFILES）
 │  ├─ report.py       # 证据图渲染
 │  └─ cli.py          # 命令行
-├─ tests/             # 回归测试
+├─ native/            # C++17 核心 + C ABI + Android/HarmonyOS 封装
+├─ tests/             # Python 回归测试
 ├─ docs/              # 截图
 ├─ requirements.txt
 ├─ pyproject.toml
@@ -170,6 +192,10 @@ python -m unittest discover -s tests -v
 ```
 
 7 个单元测试覆盖：2× 最近邻、1.5× 最近邻、JPEG 压缩后的 2× 最近邻、1.5× 双线性、1.07× 近原生放大（560×461 → 600×494）、ROI 按整图换算、原生不误报。
+
+原生库另有 10 项 Python↔C++ 对比测试（上述 7 项 + 2× 系统放大再套 1.5× 渲染 +
+黑边裁切 + 真实游戏截图），以及纯 C 的 ABI 冒烟测试，运行方法见
+[`native/README.md`](native/README.md)。
 
 另外用 1080p / 4K、最近邻 / 双线性 / 双三次、JPEG、HUD、黑边、照片素材做了端到端验证；低对比度、极软的画面仍可能漏检，这是方法本身的边界。
 

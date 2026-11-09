@@ -6,6 +6,8 @@ dist/
 reports/
 .pytest_cache/
 .venv/
+/native/build/
+/native/build-*/
 
 # local / personal test assets
 /test.png

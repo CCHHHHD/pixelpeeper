@@ -21,3 +21,21 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Run unit tests
         run: python -m unittest discover -s tests -v
+
+  native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Configure and build native library
+        run: |
+          cmake -S native -B native/build -DCMAKE_BUILD_TYPE=Release
+          cmake --build native/build -j
+      - name: Run C ABI smoke test
+        run: ctest --test-dir native/build --output-on-failure
+      - name: Install Python reference dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Compare native against Python reference
+        run: python native/tests/test_parity.py -v
